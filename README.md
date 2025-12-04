@@ -243,3 +243,10 @@ Kiểm tra phần troubleshooting
 Đọc kỹ documentation
 
 ⚠️ Lưu ý: Dự án này chỉ dành cho mục đích học tập và nghiên cứu. Tuân thủ các điều khoản sử dụng của TikTok và website liên quan.
+
+----------------------------
+
+Có thể sử dụng ngrok để mở server trên local
+
+
+ngrok http 3000
