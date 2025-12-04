@@ -1,66 +1,54 @@
 TikTok Account Analyzer 🔍
-https://img.shields.io/badge/Python-3.7+-blue.svg
-https://img.shields.io/badge/Flask-2.3.3-green.svg
-https://img.shields.io/badge/Selenium-4.15.0-orange.svg
-https://img.shields.io/badge/License-MIT-yellow.svg
+Một công cụ phân tích thông tin tài khoản TikTok với giao diện API server và client.
 
-Một công cụ phân tích thông tin tài khoản TikTok với API server và giao diện dòng lệnh. Hỗ trợ lấy thông tin chi tiết từ các tài khoản TikTok công khai.
+📋 Tổng quan
+Dự án này cung cấp hai phần chính:
 
-✨ Tính năng nổi bật
-📊 Lấy thông tin chi tiết: Followers, Following, Likes, Videos, Friends
+Server API (server.py) - Backend Flask xử lý scraping thông tin TikTok
 
-🔍 Thông tin tài khoản: User ID, ngày tạo, lịch sử chỉnh sửa
+Client CLI (client.py) - Ứng dụng dòng lệnh để tương tác với API
 
-⚡ Hỗ trợ đa phương pháp: Requests + Selenium cho độ tin cậy cao
+🚀 Tính năng
+Server API
+✅ Lấy thông tin tài khoản TikTok (followers, following, likes, videos)
 
-🎨 Giao diện CLI đẹp: Hiển thị thông tin với emoji và formatting
+✅ Hỗ trợ cả phương pháp requests và Selenium
 
-💾 Xuất file JSON: Tự động lưu kết quả phân tích
+✅ API RESTful đơn giản với Flask
 
-📈 Phân tích cấp độ: Đánh giá mức độ nổi tiếng của tài khoản
+✅ CORS enabled cho phép truy cập từ nhiều nguồn
 
-🔄 Kiểm tra liên tục: Hỗ trợ check nhiều tài khoản không giới hạn
+✅ Tự động khởi tạo Chrome Driver
 
-📋 Mục lục
-Cài đặt
+✅ Xử lý lỗi chi tiết
 
-Cách sử dụng
+Client CLI
+✅ Giao diện dòng lệnh thân thiện
 
-API Documentation
+✅ Hiển thị thông tin được format đẹp
 
-Ví dụ
+✅ Lưu kết quả vào file JSON
 
-Cấu trúc project
+✅ Phân tích cấp độ tài khoản
 
-Xử lý lỗi
+✅ Kiểm tra dependencies tự động
 
-Đóng góp
+✅ Hỗ trợ kiểm tra nhiều tài khoản liên tiếp
 
-Giấy phép
-
-🚀 Cài đặt
+🛠️ Cài đặt
 Yêu cầu hệ thống
-Python 3.7 trở lên
+Python 3.7+
 
-Google Chrome (cho Selenium WebDriver)
+Google Chrome (cho Selenium)
 
-Kết nối Internet
+Internet connection
 
-Cài đặt tự động
+Cài đặt dependencies
 bash
-# Clone repository
-git clone https://github.com/yourusername/tiktok-analyzer.git
-cd tiktok-analyzer
-
-# Chạy client để tự động cài đặt dependencies
+# Tự động cài đặt (chạy client lần đầu)
 python client.py
-Cài đặt thủ công
-bash
-# Clone repository
-git clone https://github.com/yourusername/tiktok-analyzer.git
-cd tiktok-analyzer
 
-# Cài đặt dependencies
+# Hoặc cài đặt thủ công
 pip install -r requirements.txt
 requirements.txt
 text
@@ -70,125 +58,33 @@ requests==2.31.0
 beautifulsoup4==4.12.2
 selenium==4.15.0
 webdriver-manager==4.0.1
-🎮 Cách sử dụng
+📖 Hướng dẫn sử dụng
 1. Khởi động Server
 bash
-# Chạy server (port mặc định: 3000)
 python server.py
+Server sẽ chạy tại: http://localhost:3000
 
-# Hoặc chạy trên port khác
-python server.py --port 8080
-Server sẽ khởi động tại: http://localhost:3000
+Các endpoint:
+GET / - Trang chủ với hướng dẫn
 
-2. Sử dụng Client (CLI)
+GET /api/?checktiktok=<username> - Lấy thông tin tài khoản
+
+GET /health - Kiểm tra trạng thái server
+
+2. Sử dụng Client
 bash
-# Chạy client
 python client.py
-3. Sử dụng trực tiếp qua API
+Sau đó nhập username TikTok cần kiểm tra.
+
+3. Sử dụng trực tiếp API
 bash
 # Sử dụng curl
 curl "http://localhost:3000/api/?checktiktok=tiktok"
 
-# Hoặc mở trình duyệt
+# Hoặc truy cập trình duyệt
 http://localhost:3000/api/?checktiktok=username
-📖 API Documentation
-Endpoints
-GET /
-Trang chủ với thông tin hướng dẫn sử dụng API.
-
-Response:
-
-json
-{
-  "message": "TikTok Checker API",
-  "usage": "Use /api/?checktiktok=<username> to check TikTok information",
-  "example": "http://localhost:3000/api/?checktiktok=tiktok",
-  "methods": "Uses both requests and Selenium for maximum compatibility"
-}
-GET /api/?checktiktok=<username>
-Lấy thông tin tài khoản TikTok.
-
-Parameters:
-
-checktiktok (required): Username TikTok (không cần @)
-
-Example Request:
-
-http
-GET /api/?checktiktok=tiktok
-Example Response:
-
-json
-{
-  "status": "success",
-  "username": "tiktok",
-  "timestamp": "2023-12-01T10:30:00.000Z",
-  "stats": {
-    "followers": "91,918,744",
-    "following": "134",
-    "hearts": "450,530,895",
-    "videos": "34",
-    "friends": "4"
-  },
-  "details": {
-    "user_id": "107955",
-    "created": "2020-03-01 12:00:00",
-    "modified": "2022-05-15 10:30:00",
-    "username_modified": "2021-08-20 14:25:00"
-  }
-}
-GET /health
-Kiểm tra trạng thái server.
-
-Response:
-
-json
-{
-  "status": "ok",
-  "message": "API is running"
-}
-📊 Ví dụ
-Giao diện CLI
-text
-✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨
-          TIKTOK ACCOUNT ANALYZER
-✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨
-
-🔍 Enter TikTok username: tiktok
-
-======================================================================
-📱 TIKTOK ACCOUNT INFORMATION
-======================================================================
-
-📌 BASIC INFORMATION
-----------------------------------------
-   👤 Username:      @tiktok
-   🔑 User ID:       107955
-   ⏰ Checked at:    2023-12-01 10:30:00
-
-📊 STATISTICS
-----------------------------------------
-   👥 Followers:     91,918,744
-   ↔️  Following:     134
-   ❤️  Hearts/Likes:  450,530,895
-   🎬 Videos:        34
-   🤝 Friends:       4
-   📈 Follower/Following Ratio: 685,960.78
-
-🔍 ACCOUNT DETAILS
-----------------------------------------
-   📅 Created:                2020-03-01 12:00:00
-   ✏️  Nickname Edited At:     2022-05-15 10:30:00
-   🔄 Username Changed At:    2021-08-20 14:25:00
-
-📋 SUMMARY
-----------------------------------------
-   🏆 Level: Mega Celebrity (10M+ followers)
-   🏅 Most impressive: 91,918,744 Followers
-
-======================================================================
-💾 Results saved to: tiktok_tiktok_20231201_103000.json
-File JSON Output
+📊 Thông tin trả về
+Response JSON
 json
 {
   "status": "success",
@@ -208,116 +104,142 @@ json
     "username_modified": "2021-08-20 14:25:00"
   }
 }
-📁 Cấu trúc project
+🎯 Ví dụ sử dụng
+Command Line
 text
-tiktok-analyzer/
-│
-├── server.py              # Backend Flask API server
-├── client.py              # Frontend CLI application
-├── requirements.txt       # Python dependencies
-├── README.md             # Documentation (bạn đang đọc)
-├── LICENSE               # MIT License file
-│
-├── debug_screenshot.png  # Debug screenshot (tạo tự động)
-├── debug_page.html       # Debug HTML page (tạo tự động)
-├── selenium_result_*.html# Selenium results (tạo tự động)
-│
-└── tiktok_*.json         # JSON output files (tạo tự động)
-Chi tiết file
-server.py: Flask server với Selenium WebDriver
+============================================================
+🔍 TIKTOK ACCOUNT CHECKER
+============================================================
 
-client.py: Giao diện dòng lệnh tương tác với API
+Enter TikTok username (without @ symbol)
+Examples: tiktok, khaby.lame, addisonre
 
-requirements.txt: Danh sách thư viện Python cần thiết
+👉 Username: tiktok
 
-🔧 Xử lý lỗi
-Lỗi thường gặp
-Lỗi	Nguyên nhân	Giải pháp
-Cannot connect to server	Server chưa chạy	Chạy python server.py
-No TikTok information found	Username không tồn tại	Kiểm tra lại username
-Failed to initialize browser	Chrome chưa cài đặt	Cài Google Chrome
-Timeout error	Mạng chậm/Server tải	Thử lại sau vài phút
-HTTP Error 429	Rate limiting	Đợi vài phút trước khi thử lại
-Debug Mode
-Server tự động tạo các file debug khi gặp lỗi:
-
-debug_screenshot.png: Ảnh chụp màn hình trang web
-
-debug_page.html: Mã nguồn HTML đầy đủ
-
-selenium_result_*.html: Kết quả từ Selenium
-
-Logging
-Kiểm tra terminal để xem log chi tiết:
-
-bash
-# Server logs
-Checking TikTok account: tiktok
-Trying Selenium method...
-Navigating to: https://omar-thing.site/
-
-# Client logs
 🔍 Checking account: @tiktok
 ⏳ Please wait... (This may take 10-20 seconds)
-🤝 Đóng góp
-Đóng góp luôn được chào đón! Hãy:
 
-Fork repository
+======================================================================
+📱 TIKTOK ACCOUNT INFORMATION
+======================================================================
 
-Tạo branch mới (git checkout -b feature/AmazingFeature)
+📌 BASIC INFORMATION
+----------------------------------------
+   👤 Username:      @tiktok
+   🔑 User ID:       107955
+   ⏰ Checked at:    2023-12-01 10:30:00
 
-Commit changes (git commit -m 'Add some AmazingFeature')
+📊 STATISTICS
+----------------------------------------
+   👥 Followers:     91,918,744
+   ↔️  Following:     134
+   ❤️  Hearts/Likes:  450,530,895
+   🎬 Videos:        34
+   🤝 Friends:       4
 
-Push to branch (git push origin feature/AmazingFeature)
+🔍 ACCOUNT DETAILS
+----------------------------------------
+   📅 Created:                2020-03-01 12:00:00
+   ✏️  Nickname Edited At:     2022-05-15 10:30:00
+   🔄 Username Changed At:    2021-08-20 14:25:00
 
-Mở Pull Request
+📋 SUMMARY
+----------------------------------------
+   🏆 Level: Mega Celebrity (10M+ followers)
+   🏅 Most impressive: 91,918,744 Followers
 
-Quy tắc đóng góp
-Tuân thủ PEP 8 style guide
+======================================================================
+⚙️ Cấu hình
+Server Configuration
+Port mặc định: 3000
 
-Viết comment cho code phức tạp
+Timeout: 10-20 giây mỗi request
 
-Cập nhật documentation khi cần
+Headless Chrome để tối ưu hiệu suất
 
-Test kỹ trước khi submit
+Tùy chỉnh port server
+Sửa file server.py:
 
-📄 Giấy phép
-Distributed under the MIT License. See LICENSE file for more information.
+python
+app.run(host='localhost', port=3000, debug=False)  # Thay đổi port tại đây
+🐛 Xử lý lỗi
+Lỗi thường gặp
+"Cannot connect to server"
 
-⚠️ Disclaimer
-Dự án này chỉ dành cho mục đích giáo dục và nghiên cứu.
+Kiểm tra server đã chạy chưa: python server.py
 
-Không sử dụng để spam hoặc vi phạm điều khoản dịch vụ
+Kiểm tra firewall/port
 
-Tôn trọng quyền riêng tư của người dùng
+"No TikTok information found"
 
-Dữ liệu được lấy từ nguồn công khai
+Username không tồn tại
+
+Website source thay đổi cấu trúc
+
+Thử lại sau vài phút
+
+"Failed to initialize browser"
+
+Cài đặt Google Chrome
+
+Kiểm tra Chrome Driver version
+
+"Timeout error"
+
+Mạng chậm
+
+Server quá tải
+
+Thử lại sau
+
+Debug
+Server lưu file debug: debug_screenshot.png, debug_page.html
+
+Client lưu file JSON kết quả
+
+Kiểm tra log terminal
+
+----------------------------------
+Chỉ cho mục đích giáo dục/phân tích
+
+Không spam requests
+
+Tôn trọng rate limits
+
+Lưu ý
+Dữ liệu được lấy từ public source
+
+Có thể không chính xác 100%
 
 Không chịu trách nhiệm cho việc sử dụng sai mục đích
 
-🌟 Sao repository này
-Nếu bạn thấy dự án này hữu ích, hãy cho nó một ngôi sao ⭐ trên GitHub!
+🤝 Đóng góp
+Fork repository
 
-📞 Liên hệ & Hỗ trợ
-Báo lỗi: Mở issue
+Tạo feature branch
 
-Câu hỏi: Kiểm tra FAQ hoặc mở discussion
+Commit changes
 
-Đề xuất tính năng: Mở issue với label "enhancement"
+Push to branch
 
-<div align="center">
-Made with ❤️ bằng Python
-https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
-https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white
-https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white
+Tạo Pull Request
 
-</div>
-🚀 Quick Start
-bash
-# Clone và chạy nhanh
-git clone https://github.com/yourusername/tiktok-analyzer.git
-cd tiktok-analyzer
-python server.py &  # Chạy server ở background
-python client.py    # Chạy client
-Chúc bạn sử dụng vui vẻ! 🎉
+📄 License
+MIT License - Xem file LICENSE để biết chi tiết
 
+Flask framework
+
+Selenium WebDriver
+
+BeautifulSoup4
+
+📧 Liên hệ
+Nếu có vấn đề hoặc câu hỏi:
+
+Mở issue trên GitHub
+
+Kiểm tra phần troubleshooting
+
+Đọc kỹ documentation
+
+⚠️ Lưu ý: Dự án này chỉ dành cho mục đích học tập và nghiên cứu. Tuân thủ các điều khoản sử dụng của TikTok và website liên quan.
